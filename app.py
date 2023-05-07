@@ -8,8 +8,13 @@ openai.api_key = st.secrets.OpenAIAPI.openai_api_key
 # st.session_stateを使いメッセージのやりとりを保存
 
 system_prompt = """
-与えらえれた文章を要約してください。
-箇条書きで出力してください。
+与えられた文章を以下のルールにもとづいて[修正後]として修正してください。加えて、要点を[要点]として箇条書きで書きだしてください。
+ルール：
+・「いただく」は1文１か所とする
+・受身形・自発系をなるべく使わない
+・主語と述語の距離を短くする
+・一文は長くても40字程度まで
+・一文ごとに改行を入れる
 """
 
 
@@ -37,10 +42,10 @@ def communicate():
 
 
 # ユーザーインターフェイスの構築
-st.title("文章要約")
-st.write("ChatGPT APIを使った文章要約を行います。")
+st.title("文章校正")
+st.write("ChatGPT APIを使い文章の校正を行います。")
 
-user_input = st.text_input("要約したい文章を入力してください。", key="user_input", on_change=communicate)
+user_input = st.text_input("校正したい文章を入力してください。", key="user_input", on_change=communicate)
 
 if st.session_state["messages"]:
     messages = st.session_state["messages"]
@@ -53,7 +58,15 @@ if st.session_state["messages"]:
         st.write(speaker + ": " + message["content"])
 
 # ---------- サイドバー ----------
-st.sidebar.title("st.sidebar")
+st.sidebar.title("文章要約のルール")
+rule = """
+ルール：
+・「いただく」は1文１か所とする
+・受身形・自発系をなるべく使わない
+・主語と述語の距離を短くする
+・一文は長くても40字程度まで
+・一文ごとに改行を入れる
+"""
 
-y = st.sidebar.slider("yの値")
-st.sidebar.write(str(y) + "の2倍は" + str(y*2))
+st.sidebar.write(rule)
+
