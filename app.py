@@ -8,7 +8,7 @@ openai.api_key = st.secrets.OpenAIAPI.openai_api_key
 # st.session_stateを使いメッセージのやりとりを保存
 
 system_prompt = """
-与えられた文章を以下のルールにもとづいて[修正後]として修正してください。加えて、要点を[要点]として箇条書きで書きだしてください。
+与えられた文章を以下のルールにもとづいて[修正後]として修正案を提示してください。加えて、要点を[要点]として箇条書きで書きだしてください。
 ルール：
 ・「いただく」は1文１か所とする
 ・受身形・自発系をなるべく使わない
@@ -68,5 +68,5 @@ rule = """
 ・一文ごとに改行を入れる
 """
 
-st.sidebar.write(rule)
+st.sidebar.write(rule.replace("\n", "<br>"), unsafe_allow_html=True)
 
