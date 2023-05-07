@@ -58,7 +58,7 @@ if st.session_state["messages"]:
         st.write(speaker + ": " + message["content"])
 
 # ---------- サイドバー ----------
-st.sidebar.title("文章要約のルール")
+st.sidebar.title("文章の校正ルール")
 rule = """
 ルール：
 ・「いただく」は1文１か所とする
