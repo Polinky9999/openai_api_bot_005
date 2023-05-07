@@ -6,9 +6,16 @@ import openai
 openai.api_key = st.secrets.OpenAIAPI.openai_api_key
 
 # st.session_stateを使いメッセージのやりとりを保存
+
+system_prompt = """
+与えらえれた文章を要約してください。
+箇条書きで出力してください。
+"""
+
+
 if "messages" not in st.session_state:
     st.session_state["messages"] = [
-        {"role": "system", "content": "あなたは優秀なアシスタントAIです。"}
+        {"role": "system", "content": system_prompt}
         ]
 
 # チャットボットとやりとりする関数
@@ -44,3 +51,19 @@ if st.session_state["messages"]:
             speaker="🤖"
 
         st.write(speaker + ": " + message["content"])
+
+# ---------- サイドバー ----------
+st.sidebar.title("st.sidebar")
+
+y = st.sidebar.slider("yの値")
+st.sidebar.write(str(y) + "の2倍は" + str(y*2))
+
+df_side = pd.DataFrame({
+    "animal": ["犬", "猫", "兎", "象", "蛙"],
+    "color": ["赤", "青", "黄", "白", "黒"]
+    })
+selected_side = st.sidebar.selectbox(
+    "どの動物を選びますか？",
+    df_side["animal"]
+    )
+st.sidebar.write("あなたは" + str(selected_side) + "を選びました！")
